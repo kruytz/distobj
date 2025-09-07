@@ -90,13 +90,13 @@
             display: none;
         }
 
-        .success {
+        #result.success {
             background-color: #e6f7ec;
             color: #1d7a3f;
             display: block;
         }
 
-        .error {
+        #result.error {
             background-color: #fdecea;
             color: #b32d2e;
             display: block;
@@ -137,6 +137,9 @@
 
         form.addEventListener('submit', function(event) {
             event.preventDefault();
+
+            resultDiv.className = '';
+
             const baseline = parseFloat(document.getElementById('baseline').value);
             const angleA_deg = parseFloat(document.getElementById('angleA').value);
             const angleB_deg = parseFloat(document.getElementById('angleB').value);
@@ -181,5 +184,4 @@
     </script>
 
 </body>
-
 </html>
