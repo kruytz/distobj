@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Triangulation Distance Calculator</title>
     <style>
-        /* Basic CSS for a clean and modern look */
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: #f4f7f6;
@@ -55,7 +54,7 @@
             padding: 0.75em;
             border: 1px solid #ccc;
             border-radius: 6px;
-            box-sizing: border-box; /* Important for padding */
+            box-sizing: border-box;
             font-size: 1em;
         }
         
@@ -88,10 +87,9 @@
             border-radius: 6px;
             font-size: 1.1em;
             font-weight: bold;
-            display: none; /* Hidden by default */
+            display: none;
         }
 
-        /* Classes to style the result message */
         .success {
             background-color: #e6f7ec;
             color: #1d7a3f;
@@ -134,21 +132,16 @@
     </div>
 
     <script>
-        // JavaScript logic to perform the calculation
         const form = document.getElementById('calculator-form');
         const resultDiv = document.getElementById('result');
 
         form.addEventListener('submit', function(event) {
-            // Prevent the form from reloading the page
             event.preventDefault();
-
-            // Get values from the input boxes and convert them to numbers
             const baseline = parseFloat(document.getElementById('baseline').value);
             const angleA_deg = parseFloat(document.getElementById('angleA').value);
             const angleB_deg = parseFloat(document.getElementById('angleB').value);
 
             try {
-                // --- Robustness Check 1: Validate Inputs ---
                 if (isNaN(baseline) || isNaN(angleA_deg) || isNaN(angleB_deg)) {
                     throw new Error("Please enter valid numbers in all fields.");
                 }
@@ -162,31 +155,25 @@
                     throw new Error("The sum of angles A and B must be less than 180 degrees.");
                 }
 
-                // --- Core Calculation ---
                 const deg_to_rad = Math.PI / 180.0;
                 
                 const angleA_rad = angleA_deg * deg_to_rad;
                 const angleB_rad = angleB_deg * deg_to_rad;
                 
-                // Calculate the third angle (angle at the target)
                 const angleC_rad = Math.PI - angleA_rad - angleB_rad;
                 
                 const sinC = Math.sin(angleC_rad);
 
-                // --- Robustness Check 2: Avoid Division by Zero ---
                 if (Math.abs(sinC) < Number.EPSILON) {
                     throw new Error("Invalid geometry: points are collinear (angle C is too close to 0 or 180).");
                 }
                 
-                // Apply the Law of Sines
                 const distance = baseline * Math.sin(angleB_rad) / sinC;
 
-                // Display the result
                 resultDiv.className = 'success';
                 resultDiv.innerHTML = `Distance from A: <strong>${distance.toFixed(3)}</strong> units`;
 
             } catch (error) {
-                // Display any errors
                 resultDiv.className = 'error';
                 resultDiv.innerHTML = `Error: ${error.message}`;
             }
@@ -194,4 +181,5 @@
     </script>
 
 </body>
+
 </html>
